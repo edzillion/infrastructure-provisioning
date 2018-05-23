@@ -16,7 +16,7 @@ resource "aws_instance" "app" {
 
 /* Load balancer */
 resource "aws_elb" "app" {
-  name            = "${aws_subnet.private.id}-elb"
+  name            = "${var.name_prefix}-elb"
   subnets         = ["${aws_subnet.public.id}"]
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
 
@@ -44,6 +44,6 @@ resource "aws_elb" "app" {
   instances = ["${aws_instance.app.*.id}"]
 
   tags = {
-    Name = "${aws_subnet.private.id}-elb"
+    Name = "${var.name_prefix}-elb"
   }
 }
