@@ -1,6 +1,6 @@
 /* Default security group */
 resource "aws_security_group" "default" {
-  name        = "default-airpair-example"
+  name        = "${var.name_prefix}-default-vpc"
   description = "Default security group that allows inbound and outbound traffic from all instances in the VPC"
   vpc_id      = "${aws_vpc.default.id}"
 
@@ -19,13 +19,13 @@ resource "aws_security_group" "default" {
   }
 
   tags {
-    Name = "airpair-example-default-vpc"
+    Name = "${var.name_prefix}-default-vpc"
   }
 }
 
 /* Security group for the nat server */
 resource "aws_security_group" "nat" {
-  name        = "nat-airpair-example"
+  name        = "${var.name_prefix}-nat"
   description = "Security group for nat instances that allows SSH and VPN traffic from internet. Also allows outbound HTTP[S]"
   vpc_id      = "${aws_vpc.default.id}"
 
@@ -58,13 +58,13 @@ resource "aws_security_group" "nat" {
   }
 
   tags {
-    Name = "nat-airpair-example"
+    Name = "${var.name_prefix}-nat"
   }
 }
 
 /* Security group for the web */
 resource "aws_security_group" "web" {
-  name        = "web-airpair-example"
+  name        = "${var.name_prefix}-web"
   description = "Security group for web that allows web traffic from internet"
   vpc_id      = "${aws_vpc.default.id}"
 
@@ -82,7 +82,14 @@ resource "aws_security_group" "web" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port   = 3000
+    to_port     = 3000
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   tags {
-    Name = "web-airpair-example"
+    Name = "${var.name_prefix}-web"
   }
 }

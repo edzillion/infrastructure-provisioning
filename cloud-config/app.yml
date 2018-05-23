@@ -3,6 +3,11 @@
 
 runcmd:
   # Install docker
-  - curl -sSL https://get.docker.com/ | sudo sh
+  - curl -sSL https://get.docker.com/ | sudo sh  
   # Run nginx
-  - docker run -d -p 80:80 nginx
+  # - docker run -it -d -p 80:80 nginx
+  # Install 
+  - sudo apt-get install docker-compose
+  - git clone https://github.com/RocketChat/Rocket.Chat.git
+  - cd Rocket.Chat
+  - docker-compose up

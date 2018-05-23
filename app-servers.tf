@@ -10,13 +10,13 @@ resource "aws_instance" "app" {
   user_data         = "${file("cloud-config/app.yml")}"
 
   tags = {
-    Name = "airpair-example-app-${count.index}"
+    Name = "${var.name_prefix}-app-${count.index}"
   }
 }
 
 /* Load balancer */
 resource "aws_elb" "app" {
-  name            = "airpair-example-elb"
+  name            = "${aws_subnet.private.id}-elb"
   subnets         = ["${aws_subnet.public.id}"]
   security_groups = ["${aws_security_group.default.id}", "${aws_security_group.web.id}"]
 
@@ -27,5 +27,23 @@ resource "aws_elb" "app" {
     lb_protocol       = "http"
   }
 
+  listener {
+    instance_port     = 3000
+    instance_protocol = "http"
+    lb_port           = 3000
+    lb_protocol       = "http"
+  }
+
+  listener {
+    instance_port     = 3000
+    instance_protocol = "tcp"
+    lb_port           = 443
+    lb_protocol       = "tcp"
+  }
+
   instances = ["${aws_instance.app.*.id}"]
+
+  tags = {
+    Name = "${aws_subnet.private.id}-elb"
+  }
 }

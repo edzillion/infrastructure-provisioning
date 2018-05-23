@@ -7,7 +7,7 @@ resource "aws_subnet" "private" {
   depends_on              = ["aws_instance.nat"]
 
   tags {
-    Name = "private"
+    Name = "${var.name_prefix}-private"
   }
 }
 
@@ -18,6 +18,10 @@ resource "aws_route_table" "private" {
   route {
     cidr_block  = "0.0.0.0/0"
     instance_id = "${aws_instance.nat.id}"
+  }
+
+  tags {
+    Name = "${var.name_prefix}-private-route-table"
   }
 }
 

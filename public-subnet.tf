@@ -1,6 +1,10 @@
 /* Internet gateway for the public subnet */
 resource "aws_internet_gateway" "default" {
   vpc_id = "${aws_vpc.default.id}"
+
+  tags {
+    Name = "${var.name_prefix}-internet-gateway"
+  }
 }
 
 /* Public subnet */
@@ -12,7 +16,7 @@ resource "aws_subnet" "public" {
   depends_on              = ["aws_internet_gateway.default"]
 
   tags {
-    Name = "public"
+    Name = "${var.name_prefix}-public"
   }
 }
 
@@ -23,6 +27,10 @@ resource "aws_route_table" "public" {
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = "${aws_internet_gateway.default.id}"
+  }
+
+  tags {
+    Name = "${var.name_prefix}-public-route-table"
   }
 }
 

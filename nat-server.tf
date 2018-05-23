@@ -8,7 +8,7 @@ resource "aws_instance" "nat" {
   source_dest_check = false
 
   tags = {
-    Name = "nat"
+    Name = "${var.name_prefix}-nat"
   }
 
   connection {

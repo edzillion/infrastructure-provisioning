@@ -26,6 +26,10 @@ variable "private_subnet_cidr" {
   default     = "10.128.1.0/24"
 }
 
+variable "name_prefix" {
+  description = "Prefix for resource names"
+}
+
 /* Ubuntu 14.04 amis by region */
 variable "amis" {
   description = "Base AMI to launch the instances with"
