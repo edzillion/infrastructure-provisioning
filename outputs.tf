@@ -1,5 +1,17 @@
-output "app.0.ip" {
-  value = "${aws_instance.app.0.private_ip}"
+output "rocketchat-1.ip" {
+  value = "${module.rocketchat-1.instance_ip}"
+}
+
+output "rocketchat-2.ip" {
+  value = "${module.rocketchat-2.instance_ip}"
+}
+
+output "rocketchat-1.id" {
+  value = "${module.rocketchat-1.instance_id}"
+}
+
+output "rocketchat-2.id" {
+  value = "${module.rocketchat-2.instance_id}"
 }
 
 # output "app.1.ip" {

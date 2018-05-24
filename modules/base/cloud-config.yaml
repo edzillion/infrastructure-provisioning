@@ -1,0 +1,27 @@
+#cloud-config
+
+package_update: true
+
+# packages: ['python3']
+
+users:
+  - default
+
+write_files:
+  - path: /cloudwatch.json
+    permissions: '0644'
+    encoding: base64
+    content: ${base64encode(cloudwatch_json)}
+
+runcmd:
+  # Install docker
+  - curl -sSL https://get.docker.com/ | sudo sh  
+  # Run nginx
+  - docker run -it -d -p 80:80 nginx
+
+  # - pip3 install boto3
+
+  # - wget https://s3.amazonaws.com/amazoncloudwatch-agent/linux/amd64/latest/AmazonCloudWatchAgent.zip
+  # - unzip AmazonCloudWatchAgent.zip
+  # - ./install.sh
+  # - /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:/cloudwatch.json -s
