@@ -93,3 +93,19 @@ resource "aws_security_group" "web" {
     Name = "${var.name_prefix}-web"
   }
 }
+
+resource "aws_security_group" "allow_ssh" {
+  name        = "allow_ssh"
+  description = "Allow inbound SSH traffic from my IP"
+  vpc_id      = "${aws_vpc.default.id}"
+
+  ingress {
+    from_port = 22
+    to_port   = 22
+    protocol  = "tcp"
+  }
+
+  tags {
+    Name = "Allow SSH"
+  }
+}

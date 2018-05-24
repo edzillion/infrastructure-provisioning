@@ -67,7 +67,7 @@ resource "aws_instance" "this" {
   subnet_id            = "${var.subnet_id}"
 
   # vpc_security_group_ids = ["${aws_security_group.this.id}"]
-  security_groups   = ["${var.security_group}"]
+  security_groups   = ["${var.security_groups}"]
   key_name          = "${var.key_name}"
   source_dest_check = false
   user_data         = "${file("${path.module}/cloud-config.yaml")}"

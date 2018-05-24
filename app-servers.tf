@@ -1,27 +1,27 @@
 module "rocketchat-1" {
-  source         = "modules/base"
-  name           = "${var.name_prefix}-rocketchat-1"
-  name_prefix    = "${var.name_prefix}"
-  security_group = "${aws_security_group.default.id}"
-  key_name       = "${aws_key_pair.deployer.key_name}"
+  source          = "modules/base"
+  name            = "${var.name_prefix}-rocketchat-1"
+  name_prefix     = "${var.name_prefix}"
+  security_groups = "${list(aws_security_group.default.id, aws_security_group.allow_ssh.id)}"
+  key_name        = "${aws_key_pair.deployer.key_name}"
 
   # secrets_key = "circles-sealer-1"
   instance_profile_name = "${aws_iam_instance_profile.rocketchat.name}"
   vpc_id                = "${aws_vpc.default.id}"
-  subnet_id             = "${aws_subnet.private.id}"
+  subnet_id             = "${aws_subnet.public.id}"
 }
 
 module "rocketchat-2" {
-  source         = "modules/base"
-  name           = "${var.name_prefix}-rocketchat-2"
-  name_prefix    = "${var.name_prefix}"
-  security_group = "${aws_security_group.default.id}"
-  key_name       = "${aws_key_pair.deployer.key_name}"
+  source          = "modules/base"
+  name            = "${var.name_prefix}-rocketchat-2"
+  name_prefix     = "${var.name_prefix}"
+  security_groups = "${list(aws_security_group.default.id, aws_security_group.allow_ssh.id)}"
+  key_name        = "${aws_key_pair.deployer.key_name}"
 
   # secrets_key = "circles-sealer-1"
   instance_profile_name = "${aws_iam_instance_profile.rocketchat.name}"
   vpc_id                = "${aws_vpc.default.id}"
-  subnet_id             = "${aws_subnet.private.id}"
+  subnet_id             = "${aws_subnet.public.id}"
 }
 
 /* App servers */

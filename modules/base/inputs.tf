@@ -36,8 +36,9 @@ variable "name_prefix" {
   description = "List of ingress rules to create"
 }
 
-variable "security_group" {
-  description = "Security group"
+variable "security_groups" {
+  description = "Security groups"
+  type        = "list"
 }
 
 variable "key_name" {
